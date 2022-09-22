@@ -23,7 +23,7 @@ export const HeroCard = ({ id, name, biography, images }) => {
 
         <div className="row no-gutters">
           <div className="col-4">
-            <img src={ images.md } className="card-img" alt={ name } />
+            <img src={ images.sm } className="card-img" alt={ name } />
           </div>
           <div className="col-8">
             <div className="card-body">
