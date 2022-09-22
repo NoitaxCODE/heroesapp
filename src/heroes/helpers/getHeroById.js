@@ -1,7 +1,9 @@
 import { heroes } from "../data/heroes"
 
-export const getHeroById = ( id ) => {
+export const getHeroById = async ( id ) => {
 
-  return heroes.find( hero => hero.id === id );
+  const heroesArray = await heroes()
+
+  return heroesArray.find( hero => hero.id === parseInt(id) );
 
 }

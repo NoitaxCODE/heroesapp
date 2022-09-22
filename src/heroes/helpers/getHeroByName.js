@@ -1,12 +1,14 @@
 import { heroes } from "../data/heroes";
 
-export const getHeroByName = ( name = '' ) => {
+export const getHeroByName = async ( name = '' ) => {
 
   name = name.toLowerCase().trim();
   
   if ( name.length === 0 ) return [];
 
-  return heroes.filter(
-    hero => hero.superhero.toLowerCase().includes( name )
+  const heroesArray = await heroes()
+
+  return await heroesArray.filter(
+    hero => hero.name.toLowerCase().includes( name )
   );
 }

@@ -1,6 +1,8 @@
 import { heroes } from "../data/heroes";
 
-export const getHeroesByPublisher = ( publisher )=>{
+export const getHeroesByPublisher = async ( publisher )=>{
+
+  const heroArray = await heroes()
 
   const validPublishers = ['DC Comics','Marvel Comics']
 
@@ -8,6 +10,7 @@ export const getHeroesByPublisher = ( publisher )=>{
     throw new Error(`${ publisher } in not a valid publisher`)
   }
 
-  return heroes.filter( heroe=> heroe.publisher === publisher )
+  // return heroes.filter( heroe=> heroe.publisher === publisher )
+  return heroArray.filter( heroe=> heroe.biography.publisher === publisher )
 
 }

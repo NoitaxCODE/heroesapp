@@ -3,10 +3,11 @@ import queryString from 'query-string';
 import { useForm } from '../../hooks/useForm'
 import { HeroCard } from '../components'
 import { getHeroByName } from '../helpers';
+import { useState, useEffect } from 'react';
 
 export const SearchPage = () => {
 
-  // Con el navigate viajo hacia la ruta que to quiero
+  // Con el navigate viajo hacia la ruta que yo quiero
   const navigate = useNavigate();
   // Con el location obtengo todos los parametros juntos de la URL
   const location = useLocation();
@@ -16,26 +17,42 @@ export const SearchPage = () => {
   // queryString me devuelve un objeto dentro del cual estan los parametros
   // separados
   const { q = ''} = queryString.parse( location.search )
-  const heroes = getHeroByName( q )
 
+  const [heroes, setHeroes] = useState([])
+
+  
+  
   const showSearch = ( q.length === 0 );
   const showError  = ( q.length > 0 ) && heroes.length === 0 ;
-
-
-
+  
+  
+  
   const { searchText, onInputChange} = useForm({
     searchText: q
   });
-
+  
   const onSearchSubmit = (event) => {
     event.preventDefault();
     // if ( searchText.trim().length <= 1 ) return;
-
+    
     navigate(`?q=${ searchText.toLowerCase().trim() }`)
-
-
+    
+    
     console.log({ searchText })
   }
+  
+  useEffect(() => {
+    
+    const getArrayHeroes = async ()=>{
+
+      setHeroes( await getHeroByName( q ))
+
+    }
+  
+    getArrayHeroes()
+    
+  }, [ q ])
+
 
   return (
     <>
