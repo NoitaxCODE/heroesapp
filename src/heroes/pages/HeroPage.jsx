@@ -1,22 +1,25 @@
+import { useContext } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { HeroesContext } from "../context/HeroesContext";
 import { getHeroById } from "../helpers";
 
 export const HeroPage = () => {
 
   const { id } = useParams();
-
   const [ hero, setHero ] = useState();
   // El usememo lo utilizamos para no volver a cargar los datos si el componente se reenderizara. Solo se va a
   // volver a ejecutar si el id cambia
 
   // const hero =  useMemo( ()=> getHeroById( id ), [ id ]);
 
+  const { data } = useContext( HeroesContext )
+
   useEffect( ()=>{
 
-    const heroArray =  async ()=>{
+    const heroArray = async ()=>{
       
-      setHero( await getHeroById( id ) );
+      setHero( await getHeroById( id , data) );
 
       
       if (!hero ){
@@ -25,8 +28,6 @@ export const HeroPage = () => {
     }
     
     heroArray()
-
-    
 
   },[ id ])
   

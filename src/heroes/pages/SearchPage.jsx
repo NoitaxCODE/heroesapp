@@ -3,7 +3,8 @@ import queryString from 'query-string';
 import { useForm } from '../../hooks/useForm'
 import { HeroCard } from '../components'
 import { getHeroByName } from '../helpers';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { HeroesContext } from '../context/HeroesContext';
 
 export const SearchPage = () => {
 
@@ -18,14 +19,11 @@ export const SearchPage = () => {
   // separados
   const { q = ''} = queryString.parse( location.search )
 
-  const [heroes, setHeroes] = useState([])
-
-  
+  const [ heroes, setHeroes ] = useState([])
+  const { data } = useContext( HeroesContext )
   
   const showSearch = ( q.length === 0 );
   const showError  = ( q.length > 0 ) && heroes.length === 0 ;
-  
-  
   
   const { searchText, onInputChange} = useForm({
     searchText: q
@@ -33,24 +31,14 @@ export const SearchPage = () => {
   
   const onSearchSubmit = (event) => {
     event.preventDefault();
-    // if ( searchText.trim().length <= 1 ) return;
-    
     navigate(`?q=${ searchText.toLowerCase().trim() }`)
-    
-    
-    console.log({ searchText })
   }
-  
+
   useEffect(() => {
-    
     const getArrayHeroes = async ()=>{
-
-      setHeroes( await getHeroByName( q ))
-
+      setHeroes( await getHeroByName( q, data ))
     }
-  
     getArrayHeroes()
-    
   }, [ q ])
 
 

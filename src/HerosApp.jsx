@@ -5,9 +5,7 @@ export const HerosApp = () => {
   return (
   
       <AuthProvider>
-
-        <AppRouter/>
-        
+          <AppRouter/>
       </AuthProvider>
     
   )
