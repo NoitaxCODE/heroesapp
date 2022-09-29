@@ -19,7 +19,6 @@ export const useFetch = ( url ) => {
 
   }, [])
   
-  console.log('Se hizo una peticion')
   return {
     data: state.data
   }
